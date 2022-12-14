@@ -5,6 +5,8 @@ from django.conf import settings
 from pathlib import Path
 from PIL import Image
 
+from .tasks import convert_to_webp
+
 import os
 
 
@@ -67,12 +69,3 @@ class Product(models.Model):
     class Meta:
         verbose_name = _("товар")
         verbose_name_plural = _("товары")
-
-
-def convert_to_webp(source: Path):
-    destination = source.with_suffix(".webp")
-
-    image = Image.open(source)
-    image.save(destination, format="webp")
-
-    return destination
