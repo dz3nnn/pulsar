@@ -14,9 +14,11 @@ def validate_image_formats(value):
     if value:
         img = Image.open(value)
         if img.format.lower() not in settings.VALIDE_IMAGES_FORMAT:
-            raise ValidationError(f"{img.format} is wrong image format")
+            raise ValidationError(
+                f"{img.format} %s" % (_("некорректный формат изображения."))
+            )
     else:
-        raise ValidationError("Erorr on validate image")
+        raise ValidationError(_("Ошибка при валидации изображения."))
 
 
 PRODUCT_STATUSES = [
@@ -69,3 +71,6 @@ class Product(models.Model):
     class Meta:
         verbose_name = _("товар")
         verbose_name_plural = _("товары")
+
+    def __str__(self):
+        return self.name
